@@ -23,11 +23,11 @@ var resources = {
   },
   styles: function(callback) {
     fs.readFile(paths.styles, 'ascii', function(error, data) {
-      if (error) return console.log(error);
       
       try {
-        less.render(data, { compress : true }, function(something, css) {
-          callback(css.trim());
+        less.render(data, { compress : true }, function(error, css) {
+          if (error) console.log('[error] LESS error on line ' + error.line + ': ' + error.message)
+          css ? callback(css.trim().replace(/[\r\n]/g, '')) : callback(null);
         });
       } catch (err) {
         callback(err);
@@ -36,7 +36,7 @@ var resources = {
   },
   javascripts: function(callback) {
     fs.readFile(paths.javascripts, 'ascii', function(error, data) {
-      if (error) return console.log(error);
+      if (error) console.log('[error] JavaScript/CoffeeScript: ' + error.message)
       
       try {
         var cs = CoffeeScript.compile(data);
