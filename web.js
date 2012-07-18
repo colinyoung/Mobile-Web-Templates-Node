@@ -45,17 +45,15 @@ app.get('/user/1/friends', function(request, response) {
     var response_callback = function(bit) {
         template = 'assets/layouts/layout.jade';
         filename = __dirname + '/assets/layouts'
-        console.log(filename);
 
         response.header('X-Partial-Generated', bit.timestamp);
         
         resources.compile(function(res) {
           
           fs.readFile(template, 'ascii', function(error, data) {
-            
               
               response.send({
-                  'html': jade.compile(data, {} /*{filename: filename}*/)(),
+                  'html': jade.compile(data/*, {} {filename: filename}*/)(),
                   'css': res.css,
                   'js' : res.js,
                   'resources': {
@@ -105,7 +103,6 @@ app.get('/user/1/friends', function(request, response) {
 
             doc.save();
         }
-
         response_callback(doc);
     });
 });
