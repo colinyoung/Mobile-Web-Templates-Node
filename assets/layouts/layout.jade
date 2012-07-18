@@ -1,8 +1,18 @@
 .tableview
-  {{> friend}}
+  //- this is the future
+  //- include views/friend
+  div(id="friend", class="mwt")
+    div.friend-image
+      img(src='http://www.gravatar.com/avatar/{{ avatar_hash }}', class='sq75')
+    div.friend-name
+      | {{ friend }}
+    div.friend-email
+      | {{ email }}
 
 hr.spacer
 
 .bottom-bar
   h3
-    | Hello
+    | Friends list.
+  p
+    | This app demo shows you all of the people in the world that matter to you.

@@ -2,13 +2,12 @@
   "name": "mobile-web-templates",
   "version": "0.0.1",
   "dependencies": {
-    "express": "2.5.x",
+    "express": "3.x",
     "mongoose": "2.5.x",
     "jade": "0.26.x",
     "less": "1.3.0",
     "coffee-script": "1.3.3",
     "jsmin": "1.0.1",
-    "mustache" : "0.4.0",
     "underscore" : "1.3.3"
   },
   "engines": {

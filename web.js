@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var crypto = require('crypto');
 var resources = require('./resources').resources;
-var mustache = require('mustache');
 
 mongoose.connect('mongodb://heroku_app5178075:33onkov0bfgofgp3qpuo4voi13@ds033887.mongolab.com:33887/heroku_app5178075');
 
@@ -41,26 +40,22 @@ app.get('/user/friends/flip', function(request, response) {
 app.get('/user/1/friends', function(request, response) {
     response.contentType('application/json');
 
-    var template, view, partials, layout;
+    var template, filename;
     
     var response_callback = function(bit) {
         template = 'assets/layouts/layout.jade';
+        filename = __dirname + '/assets/layouts'
+        console.log(filename);
 
         response.header('X-Partial-Generated', bit.timestamp);
-        
-        views = resources.views();
         
         resources.compile(function(res) {
           
           fs.readFile(template, 'ascii', function(error, data) {
-                          
-              /* Replace layout mustache data with views */
-              view = mustache.to_html(data, {}, views);
-              
-              layout = jade.compile(view)();              
+            
               
               response.send({
-                  'html': layout,
+                  'html': jade.compile(data, {} /*{filename: filename}*/)(),
                   'css': res.css,
                   'js' : res.js,
                   'resources': {
