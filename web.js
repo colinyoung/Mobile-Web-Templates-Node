@@ -53,8 +53,9 @@ app.get('/user/1/friends', function(request, response) {
         fs.readFile(template, 'ascii', function(error, data) {
             response.send({
                 'html': jade.compile(data)(),
-                'resources': [
-                    {
+                'resources': {
+                  'friends': 
+                    [{
                         'friend': 'Scott Ferguson',
                         'email': 'scott.ferguson@vokalinteractive.com',
                         'avatar_hash': crypto.createHash('md5').update('scott.ferguson@vokalinteractive.com').digest('hex'),
@@ -83,8 +84,8 @@ app.get('/user/1/friends', function(request, response) {
                         'friend': 'Colin Young',
                         'email': 'colin.young@vokalinteractive.com',
                         'avatar_hash': crypto.createHash('md5').update('colin.young@vokalinteractive.com').digest('hex'),
-                    },
-                ],
+                    }],
+                }
             });
         });
     };
