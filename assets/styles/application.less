@@ -2,6 +2,8 @@
 @import "assets/styles/elements.less";
 @import "assets/styles/typography.less";
 
+@tableViewCellBorderColor: #666;
+
 .sq-image (@size: 100px) {
   width: @size;
   height: @size;
@@ -12,3 +14,7 @@ img.sq25 { .sq-image(25px); } img.sq50 { .sq-image(50px); } img.sq75 { .sq-image
 img.sq100 { .sq-image(100px); } img.sq150 { .sq-image(150px); }
 img.sq200 { .sq-image(200px); } img.sq250 { .sq-image(250px); }
 img.sq300 { .sq-image(300px); } img.sq350 { .sq-image(350px); }
+
+.tableview > div {
+  border-bottom: 1px solid @tableViewCellBorderColor
+}
