@@ -3,6 +3,7 @@ var jade = require('jade');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var crypto = require('crypto');
+var resources = require('./resources').resources;
 
 mongoose.connect('mongodb://heroku_app5178075:33onkov0bfgofgp3qpuo4voi13@ds033887.mongolab.com:33887/heroku_app5178075');
 
@@ -49,44 +50,50 @@ app.get('/user/1/friends', function(request, response) {
         }
 
         response.header('X-Partial-Generated', bit.timestamp)
-
-        fs.readFile(template, 'ascii', function(error, data) {
-            response.send({
-                'html': jade.compile(data)(),
-                'resources': {
-                  'friends': 
-                    [{
-                        'friend': 'Scott Ferguson',
-                        'email': 'scott.ferguson@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('scott.ferguson@vokalinteractive.com').digest('hex'),
-                    },
-                    {
-                        'friend': 'Bracken Spencer',
-                        'email': 'bracken.spencer@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('bracken.spencer@vokalinteractive.com').digest('hex'),
-                    },
-                    {
-                        'friend': 'Jaime Calder',
-                        'email': 'jaime.calder@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('jaime.calder@vokalinteractive.com').digest('hex'),
-                    },
-                    {
-                        'friend': 'Bill Best',
-                        'email': 'bill.best@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('bill.best@vokalinteractive.com').digest('hex'),
-                    },
-                    {
-                        'friend': 'Sean Wolter',
-                        'email': 'sean.wolter@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('sean.wolter@vokalinteractive.com').digest('hex'),
-                    },
-                    {
-                        'friend': 'Colin Young',
-                        'email': 'colin.young@vokalinteractive.com',
-                        'avatar_hash': crypto.createHash('md5').update('colin.young@vokalinteractive.com').digest('hex'),
-                    }],
-                }
-            });
+        
+        resources.compile(function(res) {
+          console.log(res)
+          
+          fs.readFile(template, 'ascii', function(error, data) {
+              response.send({
+                  'html': jade.compile(data)(),
+                  'css': res.css,
+                  'js' : res.js,
+                  'resources': {
+                    'friends': 
+                      [{
+                          'friend': 'Scott Ferguson',
+                          'email': 'scott.ferguson@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('scott.ferguson@vokalinteractive.com').digest('hex'),
+                      },
+                      {
+                          'friend': 'Bracken Spencer',
+                          'email': 'bracken.spencer@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('bracken.spencer@vokalinteractive.com').digest('hex'),
+                      },
+                      {
+                          'friend': 'Jaime Calder',
+                          'email': 'jaime.calder@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('jaime.calder@vokalinteractive.com').digest('hex'),
+                      },
+                      {
+                          'friend': 'Bill Best',
+                          'email': 'bill.best@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('bill.best@vokalinteractive.com').digest('hex'),
+                      },
+                      {
+                          'friend': 'Sean Wolter',
+                          'email': 'sean.wolter@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('sean.wolter@vokalinteractive.com').digest('hex'),
+                      },
+                      {
+                          'friend': 'Colin Young',
+                          'email': 'colin.young@vokalinteractive.com',
+                          'avatar_hash': crypto.createHash('md5').update('colin.young@vokalinteractive.com').digest('hex'),
+                      }],
+                  }
+              });
+          });
         });
     };
 
